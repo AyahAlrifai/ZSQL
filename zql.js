@@ -131,22 +131,20 @@ cond+=`Sql.and(`;
 
     if(condition[1].search(/\s*!=\s*/i)!=-1) {
       cond+= `Sql.ne(${v1},${v2})`;
-    } else if(condition[1].search(/\s*=\s*/i)!=-1) {
-      cond+= `Sql.eq(${v1},${v2})`;
     } else if(condition[1].search(/\s*<>\s*/i)!=-1) {
       cond+= `Sql.ne(${v1},${v2})`;
     } else if(condition[1].search(/\s*IN\s*/i)!=-1) {
       cond+= `Sql.in(${v1},${v2})`;
     } else if(condition[1].search(/\s*NOT\sIN\s*/i)!=-1) {
       cond+= `Sql.notIn(${v1},${v2})`;
-    } else if(condition[1].search(/\s*>\s*/i)!=-1) {
-      cond+= `Sql.gt(${v1},${v2})`;
     } else if(condition[1].search(/\s*>=\s*/i)!=-1) {
       cond+= `Sql.ge(${v1},${v2})`;
+    }  else if(condition[1].search(/\s*<=\s*/i)!=-1) {
+      cond+= `Sql.le(${v1},${v2})`;
     } else if(condition[1].search(/\s*<\s*/i)!=-1) {
       cond+= `Sql.lt(${v1},${v2})`;
-    } else if(condition[1].search(/\s*<=\s*/i)!=-1) {
-      cond+= `Sql.le(${v1},${v2})`;
+    } else if(condition[1].search(/\s*>\s*/i)!=-1) {
+      cond+= `Sql.gt(${v1},${v2})`;
     } else if(condition[1].search(/\s*IS\sNull\s*/i)!=-1) {
       cond+= `Sql.isNull(${v1})`;
     } else if(condition[1].search(/\s*IS\sNot\sNull\s*/i)!=-1) {
@@ -155,7 +153,9 @@ cond+=`Sql.and(`;
       cond+= `Sql.like(${v1},${v2})`;
     } else if(condition[1].search(/\s*NOT\s*/i)!=-1) {
       cond+= "not ";
-    }
+    } else if(condition[1].search(/\s*=\s*/i)!=-1) {
+      cond+= `Sql.eq(${v1},${v2})`;
+    } 
   }
   return cond;
 }
