@@ -26,8 +26,9 @@ java="";
 query=document.getElementById('input').value;
 query=query.replace(/\s+/g," ");
 query=query.replace(/;/g,"");
-query=query.replace(/\s*FROM\s*/ig,'\nFROM ').replace(/\s*JOIN\s*/ig,'\nJOIN ').replace(/\S*INNER\s*JOIN\s*/ig,'\nJOIN ').replace(/ \s*LEFT\s*OUTER\s*JOIN\s*/ig,'\nLEFT ').replace(/\s*RIGHT\s*OUTER\s*JOIN\s*/ig,'\nRIGHT ').replace(/\s*WHERE\s*/ig,'\nWHERE ').replace(/\s*RIGHT\s*JOIN\s*/ig,'\nRIGHT ').replace(/\s*LEFT\s*JOIN\s*/ig,'\nLEFT ').replace(/'/ig,'"');
+query=query.replace(/[\s\n]+FROM\s+/ig,'\nFROM ').replace(/\s*JOIN\s*/ig,'\nJOIN ').replace(/\S*INNER\s*JOIN\s*/ig,'\nJOIN ').replace(/ \s*LEFT\s*OUTER\s*JOIN\s*/ig,'\nLEFT ').replace(/\s*RIGHT\s*OUTER\s*JOIN\s*/ig,'\nRIGHT ').replace(/\s*WHERE\s*/ig,'\nWHERE ').replace(/\s*RIGHT\s*JOIN\s*/ig,'\nRIGHT ').replace(/\s*LEFT\s*JOIN\s*/ig,'\nLEFT ').replace(/'/ig,'"');
 query=query.split('\n');
+console.log(query);
 for(var i in query) {
   if(matchFrom(query[i])!=-1) {
     selector=query[i].substr(5).trim();
@@ -37,6 +38,7 @@ for(var i in query) {
       selector=alias;
       aliasArray[alias]=selector;
     } else {
+	console.log(selector);
       tables.push(selector.replace(/\s/ig,""));
       selector=`M_${selector}.selector`;
     }
@@ -128,7 +130,6 @@ cond+=`Sql.and(`;
     } else if(tables.includes(table2.replace(/\s/ig,""))) {
       v2=`M_${table2}.col_${column2}`;
     }
-
     if(condition[1].search(/\s*!=\s*/i)!=-1) {
       cond+= `Sql.ne(${v1},${v2})`;
     } else if(condition[1].search(/\s*<>\s*/i)!=-1) {
@@ -213,23 +214,23 @@ const getJavaJoin=(join)=>{
 }
 
 const matchFrom=(query)=>{
-  return query.search(/FROM/ig);
+  return query.search(/^\s*FROM\s+/ig);
 }
 
 const matchJoin=(query)=>{
-  return query.search(/JOIN/ig);
+  return query.search(/\s*JOIN\s+/ig);
 }
 
 const matchLeftJoin=(query)=>{
-  return query.search(/LEFT/ig);
+  return query.search(/\s*LEFT\s+/ig);
 }
 
 const matchRightJoin=(query)=>{
-  return query.search(/RIGHT/ig);
+  return query.search(/\s*RIGHT\s+/ig);
 }
 
 const matchWhere=(query)=>{
-  return query.search(/WHERE/ig);
+  return query.search(/\s*WHERE\s+/ig);
 }
 
 const splitJoin=(query,type)=>{
