@@ -34,12 +34,13 @@ for(var i in query) {
     selector=query[i].substr(5).trim();
     var asIndex=selector.search(/\s+AS\s+/i)
     if(asIndex!=-1) {
-      table=selector.split(/AS/i);
+	  table=selector.split(/AS/i);
       alias=table[1].replace(/\s*/ig,"");
-      selector=table[0].replace(/\s*/ig,"");
+	  selector=table[0].replace(/\s*/ig,"");
       aliasArray[alias]=selector;
-      selector=alias;
+	  selector=alias;
     } else {
+	console.log(selector);
       tables.push(selector.replace(/\s/ig,""));
       selector=`M_${selector}.selector`;
     }
