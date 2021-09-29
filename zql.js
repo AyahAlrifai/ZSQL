@@ -35,8 +35,8 @@ for(var i in query) {
     var asIndex=selector.search(/\s+AS\s+/i)
     if(asIndex!=-1) {
       table=selector.split(/AS/i);
-      alias=table[1].replace(/\s*/,"");
-      selector=table[0].replace(/\s*/,"");
+      alias=table[1].replace(/\s*/ig,"");
+      selector=table[0].replace(/\s*/ig,"");
       aliasArray[alias]=selector;
       selector=alias;
     } else {
