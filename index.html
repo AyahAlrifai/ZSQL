@@ -25,7 +25,13 @@
       </div>
       <div class="row">
         <div class="col-lg-6">
-          <textarea class="form-control" wrap='off' id="input" rows="20" style="width:100%;height:80%"></textarea>
+          <textarea class="form-control" wrap='off' id="input" rows="20" style="width:100%;height:80%">
+             SELECT * FROM COMM_Person
+INNER JOIN ADM_Student on COMM_Person.Person_id=ADM_Student.Student_id
+LEFT JOIN ADM_StudentLink on (ADM_Student.Student_Id=ADM_StudentLink.Student_Id and ADM_StudentLink.IsMain=1)
+LEFT JOIN COMM_Person AS Parent on (ADM_StudentLink.LinkPerson_Id=Parent.Person_Id)
+where ADM_Student.Student_Id=642425;
+          </textarea>
         </div>
         <div class="col-lg-6">
           <textarea class="form-control" wrap='off' id="output" rows="20" style="width:100%;height:80%"></textarea>
