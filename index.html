@@ -35,7 +35,23 @@ where ADM_Student.Student_Id=642425;
           </textarea>
         </div>
         <div class="col-lg-6">
-          <textarea class="form-control" wrap='off' id="output" rows="20" style="width:100%;height:80%"></textarea>
+          <textarea class="form-control" wrap='off' id="output" rows="20" style="width:100%;height:80%">
+          Selector Parent=new Selector(M_COMM_Person.selector,"Parent");
+Query query=new Query(M_COMM_Person.selector,
+	Sql.eq(M_ADM_Student.col_Student_Id,642425),
+	Join.inner(
+		M_COMM_Person.selector,
+		Sql.eq(M_COMM_Person.col_Person_id,M_ADM_Student.col_Student_id),
+		M_ADM_Student.selector),
+	Join.leftOuter(
+		M_ADM_Student.selector,
+		Sql.and(Sql.eq(M_ADM_Student.col_Student_Id,M_ADM_StudentLink.col_Student_Id),Sql.eq(M_ADM_StudentLink.col_IsMain,1)),
+		M_ADM_StudentLink.selector),
+	Join.leftOuter(
+		M_ADM_StudentLink.selector,
+		Sql.eq(M_ADM_StudentLink.col_LinkPerson_Id,Sql.alias("Parent",M_COMM_Person.col_Person_Id)),
+		Parent));
+          </textarea>
         </div>
       </div>
     </div>
