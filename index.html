@@ -7,19 +7,30 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="zql.js"></script>
   </head>
   <body>
+ 	 <div class="jumbotron text-center" style="margin-bottom:0">
+ 		 <h1 style="font-size:36px"><i class="fa fa-file-code-o" style="font-size:48px;color:black"></i>&nbsp;Convert From SQL to ZQL</h1>
+  		 <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">Help</button>
+		 <div id="demo" class="collapse">
+		 	<p style="text-align:left">Notes:</p>
+ 			<ul id="notes" style="text-align:left">
+    			<li>[From|Inner|Left|Outer|Right|Join] Table <span style="color:#00cc00">AS Alias</span> </li>    			
+    			<li>[From|Inner|Left|Outer|Right|Join] Table <span style="color:#00cc00">&nbsp;Alias</span></li>    			
+    			<li>[From|Inner|Left|Outer|Right|Join] Table <span style="color:#ff0000">&nbsp;'Alias'</span></li>
+    			<li>Join <span style="color:#00cc00">[Table]</span> ON <span style="color:#00cc00">[ExsitTable]</span>.col = <span style="color:#00cc00">[Table]</span>.col ..... </li>
+     			<li>Tables Name are case sensitive <span style="color:#00cc00">ADM_Student Right</span> <span style="color:#ff0000">adm_student Wrong</span></li>     			
+     			<li>Columns Name are case sensitive <span style="color:#00cc00">ADM_Student.Student_Id Right</span> <span style="color:#ff0000">ADM_Student.student_id Wrong</span></li>     			
+     			<li>Use column and table name, not just the column name <span style="color:#00cc00">ADM_Student.Student_Id Right</span> <span style="color:#ff0000">Student_Id Wrong</span></li>
+    			<li>No need for Additional brackets in Conditions <span style="color:#ff0000">(ADM_Student.Student_Id=642425)</span> </li>
+ 			 </ul>
+ 		 </div>
+	</div>
     <div id="alert">
     </div>
-    <div class="container">
-      <label for="notes">Notes:</label>
-      <ul id="notes">
-        <li>[From|Inner|Left|Outer|Right|Join] Table <span style="color:#00ff00">AS</span> Alias</li>
-        <li>Join <span style="color:#00ff00">[Table]</span> ON <span style="color:#ff0000">[ExsitTable]</span>.col = <span style="color:#00ff00">[Table]</span>.col ..... </li>
-         <li>Tables and Columns Name are case sensitive <span style="color:#00ff00">ADM_Student Right</span> <span style="color:#ff0000">adm_student Wrong</span></li>
-        <li>No need for Additional brackets in Conditions <span style="color:#ff0000">(ADM_Student.Student_Id=642425)</span> </li>
-      </ul>
+    <div class="container" style="padding-top:2%;">
       <div class="row" style="padding-bottom:1%;">
         <div class="col-lg-6 text-center"><!--<input class="btn btn-primary" type="button" value="Paste" id="paste" >--></div>
         <div class="col-lg-6 text-center"><input class="btn btn-primary" type="button" value="Copy" id="copy" ></div>

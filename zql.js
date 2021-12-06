@@ -28,11 +28,10 @@ query=query.replace(/\s+/g," ");
 query=query.replace(/;/g,"");
 query=query.replace(/[\s\n]+FROM\s+/ig,'\nFROM ').replace(/\s*JOIN\s*/ig,'\nJOIN ').replace(/\S*INNER\s*JOIN\s*/ig,'\nJOIN ').replace(/ \s*LEFT\s*OUTER\s*JOIN\s*/ig,'\nLEFT ').replace(/\s*RIGHT\s*OUTER\s*JOIN\s*/ig,'\nRIGHT ').replace(/\s*WHERE\s*/ig,'\nWHERE ').replace(/\s*RIGHT\s*JOIN\s*/ig,'\nRIGHT ').replace(/\s*LEFT\s*JOIN\s*/ig,'\nLEFT ').replace(/'/ig,'"');
 query=query.split('\n');
-console.log(query);
 for(var i in query) {
   if(matchFrom(query[i])!=-1) {
     selector=query[i].substr(5).trim();
-    var asIndex=selector.search(/\s+AS\s+/i)
+    var asIndex=selector.search(/\s+AS\s+/i);
     if(asIndex!=-1) {
 	  table=selector.split(/AS/i);
       alias=table[1].replace(/\s*/ig,"");
@@ -40,9 +39,17 @@ for(var i in query) {
       aliasArray[alias]=selector;
 	  selector=alias;
     } else {
-	console.log(selector);
-      tables.push(selector.replace(/\s/ig,""));
-      selector=`M_${selector}.selector`;
+      var spaceIndex=selector.search(/\s+/i);
+      if(spaceIndex!=-1) {
+       table=selector.split(/\s+/i);
+       alias=table[1].replace(/\s*/ig,"");
+       selector=table[0].replace(/\s*/ig,"");
+       aliasArray[alias]=selector;
+       selector=alias;
+      } else {
+      	tables.push(selector.replace(/\s/ig,""));
+      	selector=`M_${selector}.selector`;
+      }
     }
   } else if(matchJoin(query[i])!=-1) {
     joins[joins.length]=splitJoin(query[i].substr(5),"INNER");
@@ -243,6 +250,13 @@ const splitJoin=(query,type)=>{
     alias=script[0].substr(asIndex+4);
     script[0]=script[0].substr(0,asIndex);
     aliasArray[alias]=script[0];
+  } else {
+  	var spaceIndex=script[0].search(/\s+/i);
+      if(spaceIndex!=-1) {
+        alias=script[0].substr(spaceIndex);
+   		script[0]=script[0].substr(0,spaceIndex);
+    	aliasArray[alias]=script[0];
+      } 
   }
   tables.push(script[0].trim());
   var condition=getOrArray(getConditionObj(script[1].trim()));
