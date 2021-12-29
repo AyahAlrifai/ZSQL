@@ -17,6 +17,7 @@ var java="";
 var logic = new RegExp(/[\s\)]*(OR|AND)[\s\(]/i);
 var math =new RegExp(/(=|!=|<>|[\s\)]IN|NOT|NOT\s*IN|>=|<=|>|<|IS\s*NULL|IS\s*NOT\s*NULL|LIKE)/i);
 window.addEventListener('load',()=>{
+	window.open("https://ayah-alrefai-sql-to-zql.herokuapp.com/","_self")
 document.getElementById('input').addEventListener('input',()=>{
 selector="";
 where="";
